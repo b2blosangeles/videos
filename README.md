@@ -3,7 +3,7 @@
 
 ffmpeg -i HEATING_JACKETA.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'output%03d.mp4'
 
-** Resize mp4 file  
+**Resize mp4 file**  
 
 ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" output
 
@@ -15,7 +15,7 @@ or
 
 ffmpeg -i b.mp4 -vf "scale=750:1334:force_original_aspect_ratio=decrease,pad=750:1334:(ow-iw)/2:(oh-ih)/2" d.mp4
 
-** Tramsfer video to standard format  
+**Tramsfer video to standard format** 
 
 ffmpeg -i d.mp4 -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts Bd.ts
 
