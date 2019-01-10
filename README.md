@@ -1,5 +1,5 @@
 
-** Step 1: Split Mp4 to multiple small files. (each 10 secs.) 
+**Step 1: Split Mp4 to multiple small files. (each 10 secs.)**
 
 ffmpeg -i HEATING_JACKETA.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'output%03d.mp4'
 
