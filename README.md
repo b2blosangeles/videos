@@ -31,7 +31,7 @@ or
 
 ffmpeg -i f.mp4 -c:v libx264 -r 60 -c:a aac -ar 44100 -b:a 160k -af "pan=stereo|c0=c0|c1=c0"  -strict experimental -f mpegts Cf.ts
 
-**Resize and Transfer video to standard format** 
+###Resize and Transfer video to standard format### 
 
 ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental output
 
