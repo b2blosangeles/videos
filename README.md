@@ -15,7 +15,15 @@ or
 
 ffmpeg -i b.mp4 -vf "scale=750:1334:force_original_aspect_ratio=decrease,pad=750:1334:(ow-iw)/2:(oh-ih)/2" d.mp4
 
-**Tramsfer video to standard format** 
+**Transfer video to standard format** 
+
+ffmpeg -i d.mp4 -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental Bd.ts
+
+or 
+
+ffmpeg -i f.mp4 -c:v libx264 -r 60 -c:a aac -ar 44100 -b:a 160k -af "pan=stereo|c0=c0|c1=c0"  -strict experimental  Cf.ts
+
+**Transfer video to standard ts format** 
 
 ffmpeg -i d.mp4 -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts Bd.ts
 
@@ -23,7 +31,9 @@ or
 
 ffmpeg -i f.mp4 -c:v libx264 -r 60 -c:a aac -ar 44100 -b:a 160k -af "pan=stereo|c0=c0|c1=c0"  -strict experimental -f mpegts Cf.ts
 
+**Resize and Transfer video to standard format** 
 
+ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental output
 
 -------------------
 
