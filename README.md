@@ -64,9 +64,11 @@ ffmpeg -i output0000.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease
 ffmpeg -i output0000.mp4 -vf "crop=in_h*9/16:in_h,scale=-2:400" -t 4 output0000B.mp4
 
 ffmpeg -i output0000.mp4 -vf "scale=640:ih*640/iw, crop=640:480" -f mpegts output0000B.mp4
-ffmpeg -i output0000.mp4 -vf "scale=400:ih*400/iw, crop=400:-1" output0000B.mp4
+ffmpeg -i output0000.mp4 -vf "scale=400:ih*400/iw, crop=400:400, pad=800:ih:(ow-iw)/2" output0000B.mp4
 
-resioze and crop
+ffmpeg -i output0000.mp4 -vf "scale=-1:400, pad=300:ih:(ow-iw)/2" output0000B.mp4
+===========================================
+resioze and crop (iw = input width, ih = input height):
 
 The above first crops a video to 16:9 portrait, then scales to 400px high x the appropriate (even number) width.
 <---
