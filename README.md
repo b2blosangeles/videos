@@ -1,7 +1,7 @@
 
 **Step 1: Split Mp4 to multiple small files. (each 10 secs.)**
 
-ffmpeg -i HEATING_JACKETA.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'output%03d.mp4'
+ffmpeg -i HEATING_JACKET.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'output%03d.mp4'
 
 **Resize mp4 file**  
 
@@ -31,11 +31,44 @@ or
 
 ffmpeg -i f.mp4 -c:v libx264 -r 60 -c:a aac -ar 44100 -b:a 160k -af "pan=stereo|c0=c0|c1=c0"  -strict experimental -f mpegts Cf.ts
 
-**_Resize and Transfer video to standard format_**
+**Resize and Transfer video to standard format**
 
 ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental output
 
+ffmpeg -i HEATING_JACKET.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'output%04d.mp4'
+
+ffmpeg -i output0000.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts
+
+ffmpeg -i output0001.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts
+
+ffmpeg -i output0002.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts
+
+ffmpeg -i output0000.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts
+
+ffmpeg -i output0001.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts -y
+
+ffmpeg -i output0002.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts -y
+
+
+ffmpeg -i /var/qalet/demo_videos/shopping_bag.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts plugin.ts -y
+
+ffmpeg -i "concat:output0000A.ts|plugin.ts|output0001A.ts|output0002A.ts" -c copy -bsf:a aac_adtstoasc Aoutput.mp4 -y
+
+
+===================
+ffmpeg -i output0000.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts -y
+
+ffmpeg -i output0001.mp4 -vf "scale=375:667:min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts -y
+
+ffmpeg -i output0002.mp4 -vf "scale=375:667:min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts -y
+
+
+ffmpeg -i /var/qalet/demo_videos/shopping_bag.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts plugin.ts -y
+
+ffmpeg -i "concat:output0000A.ts|plugin.ts|output0001A.ts|output0002A.ts" -c copy -bsf:a aac_adtstoasc Aoutput.mp4 -y
 -------------------
+
+ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental output
 
 https://superuser.com/questions/547296/resizing-videos-with-ffmpeg-avconv-to-fit-into-static-sized-player/1136305#1136305
 
