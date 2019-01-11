@@ -39,15 +39,7 @@ ffmpeg -i HEATING_JACKET.mp4 -map 0 -codec copy -f segment -segment_time 1:00 'o
 
 ffmpeg -i output0000.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts
 
-ffmpeg -i output0001.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts
-
-ffmpeg -i output0002.mp4 -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts
-
 ffmpeg -i output0000.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts
-
-ffmpeg -i output0001.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts -y
-
-ffmpeg -i output0002.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts -y
 
 
 ffmpeg -i /var/qalet/demo_videos/shopping_bag.mp4 -vf "scale='min(375,iw)':min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts plugin.ts -y
@@ -66,8 +58,9 @@ ffmpeg -i output0000.mp4 -vf "crop=in_h*9/16:in_h,scale=-2:400" -t 4 output0000B
 ffmpeg -i output0000.mp4 -vf "scale=640:ih*640/iw, crop=640:480" -f mpegts output0000B.mp4
 ffmpeg -i output0000.mp4 -vf "scale=400:ih*400/iw, crop=400:400, pad=800:ih:(ow-iw)/2" output0000B.mp4
 
-ffmpeg -i output0000.mp4 -vf "scale=-1:400, pad=300:ih:(ow-iw)/2" output0000B.mp4
-===========================================
+ffmpeg -i output0000.mp4 -vf "scale=-1:400, pad=600:ih:(ow-iw)/2" output0000B.mp4
+===========================================>>>
+
 resioze and crop (iw = input width, ih = input height):
 
 The above first crops a video to 16:9 portrait, then scales to 400px high x the appropriate (even number) width.
