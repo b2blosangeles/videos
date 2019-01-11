@@ -59,6 +59,8 @@ ffmpeg -i output0000.mp4 -vf "scale=640:ih*640/iw, crop=640:480" -f mpegts outpu
 ffmpeg -i output0000.mp4 -vf "scale=400:ih*400/iw, crop=400:400, pad=800:ih:(ow-iw)/2" output0000B.mp4
 
 ffmpeg -i output0000.mp4 -vf "scale=-1:400, pad=600:ih:(ow-iw)/2" output0000B.mp4
+
+ffmpeg -i output0000.mp4 -vf "scale=-1:ih, pad=in_h*16/9:ih:(ow-iw)/2" output0000B.mp4
 ===========================================>>>
 
 resioze and crop (iw = input width, ih = input height):
