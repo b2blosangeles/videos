@@ -58,9 +58,21 @@ ffmpeg -i "concat:output0000A.ts|plugin.ts|output0001A.ts|output0002A.ts" -c cop
 ===================
 ffmpeg -i output0000.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0000A.ts -y
 
-ffmpeg -i output0001.mp4 -vf "scale=375:667:min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts -y
+ffmpeg -i output0000.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" output0000A.mp4
 
-ffmpeg -i output0002.mp4 -vf "scale=375:667:min'(667,ih)':force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts -y
+--->
+ffmpeg -i output0000.mp4 -vf "crop=in_h*9/16:in_h,scale=-2:400" -t 4 output0000B.mp4
+
+ffmpeg -i output0000.mp4 -vf "scale=640:ih*640/iw, crop=640:480" -f mpegts output0000B.mp4
+ffmpeg -i output0000.mp4 -vf "scale=400:ih*400/iw, crop=640:480" output0000B.mp4
+
+resioze and crop
+
+The above first crops a video to 16:9 portrait, then scales to 400px high x the appropriate (even number) width.
+<---
+ffmpeg -i output0001.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0001A.ts -y
+
+ffmpeg -i output0002.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts output0002A.ts -y
 
 
 ffmpeg -i /var/qalet/demo_videos/shopping_bag.mp4 -vf "scale=375:667:force_original_aspect_ratio=decrease,pad=375:667:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -r 60 -c:a aac -ar 48000 -b:a 160k -af "pan=mono|c0=.5*c0+.5*c1" -strict experimental -f mpegts plugin.ts -y
